@@ -19,9 +19,6 @@ public class StatusAdapter : MonoBehaviour
     [SerializeField] private Image frontHealthBar;
     [SerializeField] private Image backHealthBar;
 
-    [Header("Energy References")]
-    [SerializeField] private Image frontEnergyBar;
-    [SerializeField] private Image backEnergyBar;
 
     [Header("Animation")]
     [SerializeField] private Color restoreHealthColor;
@@ -45,7 +42,6 @@ public class StatusAdapter : MonoBehaviour
         StaticStatus.CurrentHealth = Mathf.Clamp(StaticStatus.CurrentHealth, 0, StaticStatus.MaxHealth);
         StaticStatus.CurrentEnergy = Mathf.Clamp(StaticStatus.CurrentEnergy, 0, StaticStatus.MaxEnergy);
         UpdateHealthUI();
-        UpdateEnergyUI();
     }
 
     public void UpdateHealthUI()
@@ -76,34 +72,6 @@ public class StatusAdapter : MonoBehaviour
         }
     }
 
-    public void UpdateEnergyUI()
-    {
-        Debug.Log(StaticStatus.CurrentEnergy);
-        float fillF = frontEnergyBar.fillAmount;
-        float fillB = backEnergyBar.fillAmount;
-        float eFraction = StaticStatus.CurrentEnergy / StaticStatus.MaxEnergy;
-        energyWaitTime += Time.deltaTime;
-
-        if (fillB > eFraction)
-        {
-            frontEnergyBar.fillAmount = eFraction;
-            backEnergyBar.color = damageEnergyColor;
-            energyLerpTimer += Time.deltaTime;
-            float percentComplete = energyLerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            backEnergyBar.fillAmount = Mathf.Lerp(fillB, eFraction, percentComplete);
-        }
-        if (fillF < eFraction)
-        {
-            backEnergyBar.color = restoreEnergyColor;
-            backEnergyBar.fillAmount = eFraction;
-            energyLerpTimer += Time.deltaTime;
-            float percentComplete = energyLerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontEnergyBar.fillAmount = Mathf.Lerp(fillF, backEnergyBar.fillAmount, percentComplete);
-        }
-    }
-
     public void TakeDamage(float amount)
     {
         StaticStatus.CurrentHealth -= amount;
@@ -116,19 +84,5 @@ public class StatusAdapter : MonoBehaviour
         StaticStatus.CurrentHealth += amount;
         healthLerpTimer = 0;
         healthWaitTime = 0;
-    }
-
-    public void UseEnergy(float amount)
-    {
-        StaticStatus.CurrentEnergy -= amount;
-        energyLerpTimer = 0;
-        energyWaitTime = 0;
-    }
-
-    public void RestoreEnergy(float amount)
-    {
-        StaticStatus.CurrentEnergy += amount;
-        energyLerpTimer = 0;
-        energyWaitTime = 0;
     }
 }

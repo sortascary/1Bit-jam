@@ -8,11 +8,15 @@ public class SceneTransition : MonoBehaviour
     [SerializeField] private Material ScreenTransitionMaterial;
     [SerializeField] private float TransitionSpeed = 1.0f;
     [SerializeField] private string propertyName= "_Progress";
+    [SerializeField] private bool isOpening;
 
     public UnityEvent OnTransitionComplete;
     private void Start()
     {
+        if (isOpening)
         StartCoroutine(TransitionCourutine());
+        else
+            ScreenTransitionMaterial.SetFloat(propertyName, 1f);
     }
 
     private IEnumerator TransitionCourutine()

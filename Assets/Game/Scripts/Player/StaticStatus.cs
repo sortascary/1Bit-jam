@@ -38,6 +38,9 @@ public class StaticStatus : MonoBehaviour
     [SerializeField] private float _dashCooldown = 0.4f;
     [SerializeField] private float _dashDuration = 0.5f;
 
+    [Header("Bleed Settings")]
+
+
     [Header("Bullet Settings")]
     [SerializeField] private float _bulletSpeedMultiplier = 1f;
     [SerializeField] private float _bulletCooldownMultiplier = 1f;

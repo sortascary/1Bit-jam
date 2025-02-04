@@ -8,6 +8,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     [SerializeField] private InputActionAsset inputAsset;
     private InputActionMap gameplayInputMap;
     private InputAction moveAction;
+    private InputAction interactAction;
     [HideInInspector] public InputAction mouseAction;
     [HideInInspector] public InputAction lookAction;
     [HideInInspector] public InputAction attackAction;
@@ -41,6 +42,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private void OnEnable()
     {
         moveAction?.Enable();
+        interactAction?.Enable();
         mouseAction?.Enable();
         lookAction?.Enable();
         attackAction?.Enable();
@@ -72,6 +74,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         }
 
         moveAction?.Disable();
+        interactAction?.Disable();
         mouseAction?.Disable();
         lookAction?.Disable();
     }
@@ -79,7 +82,8 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private void FixedUpdate()
     {
         HandleMovement();
-
+        HandleInteract();
+        StatusAdapter.Instance.TakeDamage(0.03f);
         if (currentShootCooldown > 0f) currentShootCooldown -= Time.deltaTime;
         if (currentDashCooldown > 0f) currentDashCooldown -= Time.deltaTime;
     }
@@ -105,6 +109,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     {
         gameplayInputMap = inputAsset.FindActionMap("Player");
         moveAction = gameplayInputMap?.FindAction("Move");
+        interactAction = gameplayInputMap?.FindAction("Interact");
         mouseAction = gameplayInputMap?.FindAction("Mouse");
         lookAction = gameplayInputMap?.FindAction("Look");
         attackAction = gameplayInputMap?.FindAction("Attack");
@@ -157,7 +162,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
         if (bulletBehavior != null)
         {
-            StatusAdapter.Instance.UseEnergy(bulletBehavior.EnergyCost());
+            StatusAdapter.Instance.TakeDamage(bulletBehavior.EnergyCost());
             bulletBehavior.Attack(StaticStatus.BulletSpeedMultiplier);
             currentShootCooldown = bulletBehavior.GetCooldown(StaticStatus.BulletCooldownMultiplier);
         }
@@ -193,6 +198,15 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
             }
 
             yield return new WaitForSeconds(1f);
+        }
+    }
+
+    public void HandleInteract()
+    {
+        if (interactAction.IsPressed())
+        {
+            Debug.Log("Healing");
+            StatusAdapter.Instance.RestoreHealth(2f);
         }
     }
 

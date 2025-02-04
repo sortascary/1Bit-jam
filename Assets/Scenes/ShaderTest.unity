@@ -347,6 +347,7 @@ MonoBehaviour:
   ScreenTransitionMaterial: {fileID: 2100000, guid: 31670265d1b38b047a551c5f2ca08de0, type: 2}
   TransitionSpeed: 5
   propertyName: _Progress
+  isOpening: 1
   OnTransitionComplete:
     m_PersistentCalls:
       m_Calls: []
@@ -613,17 +614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &582429013 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8057148191993994804, guid: e8e21ebf9383b1740bd32ee1fbcf0ae8, type: 3}
-  m_PrefabInstance: {fileID: 1961241225}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,8 +717,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontHealthBar: {fileID: 578976905}
   backHealthBar: {fileID: 325065214}
-  frontEnergyBar: {fileID: 1874515186}
-  backEnergyBar: {fileID: 582429013}
   restoreHealthColor: {r: 0.57254905, g: 1, b: 0.49803922, a: 1}
   damageHealthColor: {r: 0.43529412, g: 0, b: 0.10980392, a: 1}
   restoreEnergyColor: {r: 0.5921569, g: 1, b: 0.5568628, a: 1}
@@ -802,9 +790,9 @@ Canvas:
   m_GameObject: {fileID: 1177802598}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
+  m_PlaneDistance: 93.2
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -1093,17 +1081,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1874515186 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9159594554840471106, guid: e8e21ebf9383b1740bd32ee1fbcf0ae8, type: 3}
-  m_PrefabInstance: {fileID: 1961241225}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1961241225
 PrefabInstance:
   m_ObjectHideFlags: 0
