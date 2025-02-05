@@ -27,6 +27,8 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private float currentShootCooldown = 0f;
     private float currentDashCooldown = 0f;
 
+    public Vector2 MoveDirection { get => moveDirection; set => moveDirection = value; }
+
     private void Awake()
     {
         if (StaticStatus.Instance == null)
