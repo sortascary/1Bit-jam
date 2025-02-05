@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 63fb98fddf98d2440877767c699525e2
+guid: dc75008cab43e1b4795374adb6c351d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1782834938590364599
-    second: EnergyBack_0
+      213: 5015626466910574835
+    second: Highscore_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,20 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnergyBack_0
+      name: Highscore_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 22
-        width: 189
-        height: 15
+        x: 19
+        y: 9
+        width: 90
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 94c7a28b1191247e0800000000000000
-      internalID: -1782834938590364599
+      spriteID: 3f8904e92b51b9540800000000000000
+      internalID: 5015626466910574835
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      EnergyBack_0: -1782834938590364599
+      Highscore_0: 5015626466910574835
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

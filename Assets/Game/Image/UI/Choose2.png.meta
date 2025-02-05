@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 15cba0c5e417e09429507573104318f0
+guid: eacdb15bfc266d14198964a8020a5d86
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7220991308910303297
-    second: BackHealth_0
+      213: -1564041965426187879
+    second: Choose2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,20 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BackHealth_0
+      name: Choose2_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 34
-        width: 196
-        height: 14
+        x: 14
+        y: 13
+        width: 37
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb7e73ab9a2e9cb90800000000000000
-      internalID: -7220991308910303297
+      spriteID: 991e7fc7e186b4ae0800000000000000
+      internalID: -1564041965426187879
       vertices: []
       indices: 
       edges: []
@@ -161,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BackHealth_0: -7220991308910303297
+      Choose2_0: -1564041965426187879
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
