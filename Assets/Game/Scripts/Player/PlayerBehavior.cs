@@ -83,7 +83,8 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     {
         HandleMovement();
         HandleInteract();
-        StatusAdapter.Instance.TakeDamage(0.03f);
+
+        StatusAdapter.Instance.TakeDamage(StaticStatus.BleedAmount);
         if (currentShootCooldown > 0f) currentShootCooldown -= Time.deltaTime;
         if (currentDashCooldown > 0f) currentDashCooldown -= Time.deltaTime;
     }
@@ -206,7 +207,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         if (interactAction.IsPressed())
         {
             Debug.Log("Healing");
-            StatusAdapter.Instance.RestoreHealth(2f);
+            StatusAdapter.Instance.RestoreHealth(StaticStatus.HealAmount);
         }
     }
 
