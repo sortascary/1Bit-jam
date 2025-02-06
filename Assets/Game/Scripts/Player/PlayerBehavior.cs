@@ -24,6 +24,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     [HideInInspector] public Vector2 targetPlayerRotation;
     private Rigidbody2D rb;
     [HideInInspector] public bool controllerConnected = false;
+    private float scoreTi;
     private float currentShootCooldown = 0f;
     private float currentDashCooldown = 0f;
 
@@ -35,7 +36,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         {
             Debug.LogError("StaticStatus is not set. Ensure it is in the scene.");
         }
-
+        if (StaticStatus.EndScreen != null) StaticStatus.EndScreen.gameObject.SetActive(false);
         SetupReferences();
         SetUpBindings();
         StartCoroutine(CheckForControllers());
@@ -81,12 +82,22 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         lookAction?.Disable();
     }
 
+    private void Update()
+    {
+        if (StaticStatus.CurrentHealth > 0)
+            scoreTi += Time.deltaTime;
+        int _Minutes = Mathf.FloorToInt(scoreTi / 60);
+        int _Seconds = Mathf.FloorToInt(scoreTi % 60);
+        if (StaticStatus.EndScreen != null)
+            StaticStatus.ScoreTi.text = $"{_Minutes:00} : {_Seconds:00}";
+        HandleInteract();
+    }
     private void FixedUpdate()
     {
-        HandleMovement();
-        HandleInteract();
 
-        StatusAdapter.Instance.TakeDamage(StaticStatus.BleedAmount);
+        HandleMovement();
+
+        if (StaticStatus.CurrentHealth > 0) StatusAdapter.Instance.TakeDamage(StaticStatus.BleedAmount); else if (StaticStatus.EndScreen != null) StaticStatus.EndScreen.gameObject.SetActive(true);
         if (currentShootCooldown > 0f) currentShootCooldown -= Time.deltaTime;
         if (currentDashCooldown > 0f) currentDashCooldown -= Time.deltaTime;
     }
@@ -206,7 +217,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
     public void HandleInteract()
     {
-        if (interactAction.IsPressed())
+        if (interactAction.WasPressedThisFrame())
         {
             Debug.Log("Healing");
             StatusAdapter.Instance.RestoreHealth(StaticStatus.HealAmount);

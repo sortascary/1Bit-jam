@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Progress: 0
+    - _Progress: 1
     m_Colors:
     - _PosterizePixel: {r: 25, g: 15, b: 0, a: 0}
     - _TransitionColor: {r: 0.2196078, g: 0.24313727, b: 0.3098039, a: 1}

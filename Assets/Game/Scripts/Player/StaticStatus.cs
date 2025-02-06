@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StaticStatus : MonoBehaviour
 {
@@ -45,6 +47,10 @@ public class StaticStatus : MonoBehaviour
     [Header("Bullet Settings")]
     [SerializeField] private float _bulletSpeedMultiplier = 1f;
     [SerializeField] private float _bulletCooldownMultiplier = 1f;
+
+    [Header("Endscreen settings")]
+    [SerializeField] private Image _endScreen;
+    [SerializeField] private TextMeshProUGUI _ScoreTi;
 
     private bool _isInteracting = false;
 
@@ -142,6 +148,18 @@ public class StaticStatus : MonoBehaviour
     {
         get => Instance._bulletCooldownMultiplier;
         set => Instance._bulletCooldownMultiplier = value;
+    }
+
+    public static Image EndScreen
+    {
+        get => Instance._endScreen;
+        set => Instance._endScreen = value;
+    }
+
+    public static TextMeshProUGUI ScoreTi
+    {
+        get => Instance._ScoreTi;
+        set => Instance._ScoreTi = value;
     }
 
     public static bool IsInteracting
