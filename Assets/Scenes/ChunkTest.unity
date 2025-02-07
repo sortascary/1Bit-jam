@@ -271,8 +271,12 @@ MonoBehaviour:
   _dashForce: 5
   _dashCooldown: 0.4
   _dashDuration: 0.5
+  _BleedAmount: 0.03
+  _HealAmount: 2
   _bulletSpeedMultiplier: 1
   _bulletCooldownMultiplier: 1
+  _endScreen: {fileID: 0}
+  _ScoreTi: {fileID: 0}
 --- !u!114 &5314175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,7 +374,7 @@ SpriteRenderer:
   m_SortingLayerID: -243254673
   m_SortingLayer: 2
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 2860741159496886626, guid: d7c1bb71bb481854fb8a8b2597720175, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -461,7 +465,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.625, y: 0.9375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -566,6 +570,7 @@ MonoBehaviour:
   ScreenTransitionMaterial: {fileID: 2100000, guid: 31670265d1b38b047a551c5f2ca08de0, type: 2}
   TransitionSpeed: 5
   propertyName: _Progress
+  isOpening: 0
   OnTransitionComplete:
     m_PersistentCalls:
       m_Calls: []
@@ -1009,17 +1014,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3216756212428835996, guid: 4957d917ee3b95d43a93901d50f5dd12, type: 3}
   m_PrefabInstance: {fileID: 5845047608384821792}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &582429013 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8057148191993994804, guid: e8e21ebf9383b1740bd32ee1fbcf0ae8, type: 3}
-  m_PrefabInstance: {fileID: 1961241225}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,8 +1195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontHealthBar: {fileID: 578976905}
   backHealthBar: {fileID: 325065214}
-  frontEnergyBar: {fileID: 1874515186}
-  backEnergyBar: {fileID: 582429013}
   restoreHealthColor: {r: 0.57254905, g: 1, b: 0.49803922, a: 1}
   damageHealthColor: {r: 0.43529412, g: 0, b: 0.10980392, a: 1}
   restoreEnergyColor: {r: 0.5921569, g: 1, b: 0.5568628, a: 1}
@@ -1597,7 +1589,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 1784652693
   m_SortingOrder: 0
@@ -1957,17 +1949,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1874515186 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9159594554840471106, guid: e8e21ebf9383b1740bd32ee1fbcf0ae8, type: 3}
-  m_PrefabInstance: {fileID: 1961241225}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1961241225
 PrefabInstance:
   m_ObjectHideFlags: 0
