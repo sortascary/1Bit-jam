@@ -171,7 +171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2235572024597501011}
   m_Layer: 0
-  m_Name: 'Right Up '
+  m_Name: Right Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -611,7 +611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5586028355755426392}
   m_Layer: 0
-  m_Name: 'Left Up '
+  m_Name: Left Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

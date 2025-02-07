@@ -7,103 +7,103 @@ public class MapController : MonoBehaviour
     public List<GameObject> terrainChunks;
     public GameObject player;
     public float checkerRadius;
-    public Vector3 noTerrainPosition;
     public LayerMask terrainMask;
     public GameObject currentChunk;
     private Vector2 moveDir;
 
     [Header("Optimization")]
-    public List<GameObject> spawnedChunks;
-    GameObject latestChunk;
-    public float maxOpDist; //Must be greater than the length and width of the tilemap
-    float opDist;
-    float optimizerCooldown;
+    public HashSet<GameObject> spawnedChunks = new();
+    private Queue<GameObject> chunkPool = new();
+    public float maxOpDist;
+    private float optimizerCooldown;
     public float optimizerCooldownDur;
 
     void Start()
     {
-        moveDir = player.GetComponent<PlayerBehavior>().MoveDirection;
+        if (player.TryGetComponent(out PlayerBehavior pb))
+        {
+            moveDir = pb.MoveDirection;
+        }
+        else
+        {
+            Debug.LogError("PlayerBehavior component is missing on the player!");
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        moveDir = player.GetComponent<PlayerBehavior>().MoveDirection;
+        if (player.TryGetComponent(out PlayerBehavior pb))
+        {
+            moveDir = pb.MoveDirection;
+        }
         ChunkChecker();
-        ChunkOptimzer();
+        ChunkOptimizer();
     }
 
     void ChunkChecker()
     {
         if (!currentChunk) return;
 
-        if (moveDir.x > 0 && moveDir.y == 0)
+        string direction = GetMovementDirection();
+        if (!string.IsNullOrEmpty(direction))
         {
-            CheckAndSpawn("Right");
+            CheckAndSpawn(direction);
         }
-        else if (moveDir.x < 0 && moveDir.y == 0)
-        {
-            CheckAndSpawn("Left");
-        }
-        else if (moveDir.y > 0 && moveDir.x == 0)
-        {
-            CheckAndSpawn("Up");
-        }
-        else if (moveDir.y < 0 && moveDir.x == 0)
-        {
-            CheckAndSpawn("Down");
-        }
-        else if (moveDir.x > 0 && moveDir.y > 0)
-        {
-            CheckAndSpawn("Right Up");
-        }
-        else if (moveDir.x > 0 && moveDir.y < 0)
-        {
-            CheckAndSpawn("Right Down");
-        }
-        else if (moveDir.x < 0 && moveDir.y > 0)
-        {
-            CheckAndSpawn("Left Up");
-        }
-        else if (moveDir.x < 0 && moveDir.y < 0)
-        {
-            CheckAndSpawn("Left Down");
-        }
+    }
+
+    string GetMovementDirection()
+    {
+        if (moveDir.x > 0) return moveDir.y > 0 ? "Right Up" : (moveDir.y < 0 ? "Right Down" : "Right");
+        if (moveDir.x < 0) return moveDir.y > 0 ? "Left Up" : (moveDir.y < 0 ? "Left Down" : "Left");
+        if (moveDir.y > 0) return "Up";
+        if (moveDir.y < 0) return "Down";
+        return "";
     }
 
     public void CheckAndSpawn(string direction)
     {
-        Transform checkTransform = currentChunk.transform.Find(direction);
+        Transform checkTransform = currentChunk?.transform.Find(direction);
         if (checkTransform != null && !Physics2D.OverlapCircle(checkTransform.position, checkerRadius, terrainMask))
         {
-            noTerrainPosition = checkTransform.position;
-            SpawnChunk();
+            SpawnChunk(checkTransform.position);
         }
     }
 
-    void SpawnChunk()
+    void SpawnChunk(Vector3 position)
     {
-        int rand = Random.Range(0, terrainChunks.Count);
-        latestChunk = Instantiate(terrainChunks[rand], noTerrainPosition, Quaternion.identity);
-        spawnedChunks.Add(latestChunk);
-    }
-
-    void ChunkOptimzer()
-    {
-        optimizerCooldown -= Time.deltaTime;
-
-        if (optimizerCooldown <= 0f)
+        GameObject chunk;
+        if (chunkPool.Count > 0)
         {
-            optimizerCooldown = optimizerCooldownDur;
+            chunk = chunkPool.Dequeue();
+            chunk.transform.position = position;
+            chunk.SetActive(true);
         }
         else
         {
-            return;
+            int rand = Random.Range(0, terrainChunks.Count);
+            chunk = Instantiate(terrainChunks[rand], position, Quaternion.identity);
         }
+        spawnedChunks.Add(chunk);
+    }
 
+    void ChunkOptimizer()
+    {
+        if ((optimizerCooldown -= Time.deltaTime) > 0) return;
+        optimizerCooldown = optimizerCooldownDur;
+
+        List<GameObject> toDisable = new();
         foreach (GameObject chunk in spawnedChunks)
         {
-            opDist = Vector3.Distance(player.transform.position, chunk.transform.position);
-            chunk.SetActive(opDist <= maxOpDist);
+            if (Vector3.Distance(player.transform.position, chunk.transform.position) > maxOpDist)
+            {
+                chunk.SetActive(false);
+                chunkPool.Enqueue(chunk);
+                toDisable.Add(chunk);
+            }
+        }
+        foreach (var chunk in toDisable)
+        {
+            spawnedChunks.Remove(chunk);
         }
     }
 }
