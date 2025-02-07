@@ -5,20 +5,10 @@ using UnityEngine;
 public class CameraChunk : MonoBehaviour
 {
     public LayerMask terrainMask;
-    private Dictionary<string, bool> chunkDetected;
-    public GameObject[] chunkCheckers; // Assign the checker GameObjects (Up, Down, Left, Right, etc.)
+    public GameObject[] chunkCheckers;
     public MapController mc;
 
-    void Start()
-    {
-        chunkDetected = new Dictionary<string, bool>();
-        foreach (GameObject checker in chunkCheckers)
-        {
-            chunkDetected[checker.name] = false;
-        }
-    }
-
-    void Update()
+    void FixedUpdate()
     {
         CheckChunks();
     }
@@ -27,25 +17,18 @@ public class CameraChunk : MonoBehaviour
     {
         foreach (GameObject checker in chunkCheckers)
         {
-            Collider2D hit = Physics2D.OverlapCircle(checker.transform.position, 0.1f, terrainMask);
-            chunkDetected[checker.name] = hit != null;
-        }
-
-        foreach (var chunk in chunkDetected)
-        {
-            if (!chunk.Value)
+            if (!Physics2D.OverlapCircle(checker.transform.position, 0.1f, terrainMask))
             {
-                SpawnChunk(chunk.Key);
+                SpawnChunk(checker.name);
             }
         }
     }
 
     void SpawnChunk(string direction)
     {
-        // Tambahkan logic spawn chunk sesuai dengan arah yang diperlukan
-        if (mc is not null)
+        if (mc != null)
         {
-            Debug.Log("Spawning chunk at: " + direction);
+            Debug.Log($"Spawning chunk at: {direction}");
             mc.CheckAndSpawn(direction);
         }
         else
