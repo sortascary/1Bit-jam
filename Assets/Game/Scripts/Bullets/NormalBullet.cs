@@ -6,6 +6,7 @@ public class NormalBullet : BulletBehavior
     [SerializeField] private float bulletDamage = 1;
     [SerializeField] private float bulletCost = 1;
     [SerializeField] private float cooldown = 0.1f;
+    [SerializeField] private float timeToDestroy = 3;
     [SerializeField] private GameObject hitEffect;
     [SerializeField] private AudioClip hitSound;
 
@@ -40,8 +41,10 @@ public class NormalBullet : BulletBehavior
         if (!src.isPlaying) Destroy(gameObject);
     }
 
-    public override void Attack(float bulletSpeedMultiplier)
+    public override void Attack(float bulletSpeedMultiplier, GameObject player)
     {
+        Destroy(gameObject, timeToDestroy);
+
         rb = GetComponent<Rigidbody2D>();
 
         rb.linearVelocity = transform.up * bulletSpeed * bulletSpeedMultiplier;
