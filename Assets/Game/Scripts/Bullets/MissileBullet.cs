@@ -98,9 +98,9 @@ public class MissileBullet : BulletBehavior
                 Destroy(Instantiate(hitEffect, transform.position, transform.rotation), 0.5f);
 
             IsDamage isDamage = collision.gameObject.GetComponent<IsDamage>();
-            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
             if (isDamage != null)
             {
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
                 isDamage.Damage(bulletDamage);
             }
 
