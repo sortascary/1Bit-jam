@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6b073ea07a061ff46ad86042ffd16c9c
+guid: 5cda8cfca2b667441ae6c1391bdf4ae3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1570364528241599059
-    second: SkillDash_0
+      213: 5833715933460060806
+    second: interactUI_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SkillDash_0
+      name: interactUI_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 13
-        width: 38
-        height: 38
+        x: 8
+        y: 6
+        width: 49
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 352e6b1e73e0bc510800000000000000
-      internalID: 1570364528241599059
+      spriteID: 68a5c6eabb585f050800000000000000
+      internalID: 5833715933460060806
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SkillDash_0: 1570364528241599059
+      interactUI_0: 5833715933460060806
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
