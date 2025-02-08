@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class SceneTransition : MonoBehaviour
             ScreenTransitionMaterial.SetFloat(propertyName, 1f);
     }
 
+    public void FadeOut()
+    {
+        StartCoroutine(TransitionCourutine());
+    }
+
     private IEnumerator TransitionCourutine()
     {
         float currentTime = 0;
@@ -31,7 +37,7 @@ public class SceneTransition : MonoBehaviour
         OnTransitionComplete?.Invoke();
     }
 
-    public void ReverseTransition()
+    public void FadeIn()
     {
         StartCoroutine(TransitionCourutineReverse());
     }
@@ -45,6 +51,7 @@ public class SceneTransition : MonoBehaviour
             ScreenTransitionMaterial.SetFloat(propertyName, Mathf.Clamp01(currentTime / TransitionSpeed));
             yield return null;
         }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         OnTransitionComplete?.Invoke();
     }
 }
