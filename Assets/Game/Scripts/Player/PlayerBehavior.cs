@@ -30,6 +30,11 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private float currentShootCooldown = 0f;
     [HideInInspector] public float currentDashCooldown = 0f;
 
+    [Header("Shield Settings")]
+    public float currentShieldCooldown = 0f;
+    public float shieldCooldownDuration = 5f;
+    public GameObject shield;
+
     public Vector2 MoveDirection { get => moveDirection; set => moveDirection = value; }
 
     private void Awake()
@@ -42,6 +47,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         SetupReferences();
         SetUpBindings();
         StartCoroutine(CheckForControllers());
+        shield.SetActive(false);
     }
 
     private void OnEnable()
@@ -106,6 +112,16 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
             StaticStatus.ScoreTime.text = $"{_GameMinutes:00} : {_GameSeconds:00}";
         }
 
+        if (currentShieldCooldown > 0f)
+        {
+            currentShieldCooldown -= Time.deltaTime;
+
+            if (currentShieldCooldown <= 0f)
+            {
+                shield.SetActive(false);
+            }
+        }
+
     }
 
     private void FixedUpdate()
@@ -121,6 +137,16 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         }
         if (currentShootCooldown > 0f) currentShootCooldown -= Time.deltaTime;
         if (currentDashCooldown > 0f) currentDashCooldown -= Time.deltaTime;
+    }
+
+
+    public void ActivateShield()
+    {
+        if (currentShieldCooldown <= 0f)
+        {
+            currentShieldCooldown = shieldCooldownDuration;
+            shield.SetActive(true);
+        }
     }
 
     private void SetupReferences()
