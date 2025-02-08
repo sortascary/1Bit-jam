@@ -23,6 +23,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private Vector2 moveDirection;
     [HideInInspector] public Vector2 targetPlayerRotation;
     private Rigidbody2D rb;
+    private Animator animator;
     [HideInInspector] public bool controllerConnected = false;
     private float _scoreTimer = 0f;
     private float scoreTi;
@@ -127,6 +128,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         }
 
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         if (rb == null)
         {
             Debug.LogError("Rigidbody2D component not found on the GameObject.");
@@ -246,6 +248,12 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
         if (moveDirection != Vector2.zero)
         {
+            animator.SetBool("IsRunning", true);
+            if (moveDirection.x > 0)
+                transform.localScale = new Vector3(1f, 1f, 1);
+            else if (moveDirection.x < 0)
+                transform.localScale = new Vector3(-1f, 1f, 1);
+
             rb.AddForce(moveDirection * StaticStatus.AccelerationForce, ForceMode2D.Force);
 
             if (rb.linearVelocity.magnitude > currentMaxSpeed)
@@ -255,6 +263,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         }
         else
         {
+            animator.SetBool("IsRunning", false);
             if (rb.linearVelocity.magnitude > 0)
             {
                 float decelerationAmount = StaticStatus.DecelerationRate * Time.fixedDeltaTime;
