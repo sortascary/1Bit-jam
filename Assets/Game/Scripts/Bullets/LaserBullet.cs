@@ -26,7 +26,6 @@ public class LaserBullet : BulletBehavior
     private GameObject playerObject;
     Vector3 endPosition;
     private float laserSize;
-    private float laserColor;
     private float shotStartTime;
     private float hasShotStartTime;
     private float lineLength;
