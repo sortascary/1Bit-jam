@@ -57,6 +57,12 @@ public class SkillController : MonoBehaviour
         {
             if (playerBehavior.bulletPrefab == homingBullet) playerBehavior.bulletPrefab = bullet; else playerBehavior.bulletPrefab = homingBullet;
         };
+
+        four.performed += ctx =>
+        {
+            // Example: Activate a shield
+            playerBehavior.ActivateShield();
+        };
     }
 
     private void OnDisable()
@@ -97,6 +103,6 @@ public class SkillController : MonoBehaviour
 
         if(playerBehavior.currentDashCooldown <=0f) skill3.color = new Color(skill1.color.r, skill1.color.g, skill1.color.b, 1); else skill3.color = new Color(skill1.color.r, skill1.color.g, skill1.color.b, opacity);
 
-
+        if (playerBehavior.currentShieldCooldown <= 0f) skill4.color = new Color(skill4.color.r, skill4.color.g, skill4.color.b, 1); else skill4.color = new Color(skill4.color.r, skill4.color.g, skill4.color.b, opacity);
     }
 }

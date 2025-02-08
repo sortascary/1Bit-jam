@@ -42,6 +42,8 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     private float subtleMovementTimer;
     private float currentCooldown = 0f;
     private Camera mainCamera;
+    public bool CanMove { get; set; } = true;
+
 
     void Start()
     {
@@ -55,7 +57,8 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     {
 
         DetectPlayer();
-
+        if (CanMove)
+        {
         if (player != null)
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
@@ -90,6 +93,9 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
         if (currentCooldown > 0f)
         {
             currentCooldown -= Time.deltaTime;
+        }
+
+
         }
     }
 
