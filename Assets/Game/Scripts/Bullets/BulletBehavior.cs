@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class BulletBehavior : MonoBehaviour
 {
-    public virtual void Attack(float bulletSpeedMultiplier)
+    public virtual void Attack(float bulletSpeedMultiplier, GameObject player)
     {
         Debug.Log("No Attack Detected");
     }

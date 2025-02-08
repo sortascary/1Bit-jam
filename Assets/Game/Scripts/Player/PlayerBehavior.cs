@@ -177,11 +177,9 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         if (bulletBehavior != null)
         {
             StatusAdapter.Instance.TakeDamage(bulletBehavior.EnergyCost());
-            bulletBehavior.Attack(StaticStatus.BulletSpeedMultiplier);
+            bulletBehavior.Attack(StaticStatus.BulletSpeedMultiplier, gameObject);
             currentShootCooldown = bulletBehavior.GetCooldown(StaticStatus.BulletCooldownMultiplier);
         }
-
-        Destroy(bullet, 3f);
     }
 
     IEnumerator CheckForControllers()

@@ -161,7 +161,7 @@ MonoBehaviour:
   _maxSpeedDash: 45
   _decelerationRate: 30
   _turningSpeed: 20
-  _dashForce: 5
+  _dashForce: 10
   _dashCooldown: 0.4
   _dashDuration: 0.5
   _BleedAmount: 0.03
@@ -219,7 +219,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  bulletPrefab: {fileID: 2287350168994580139, guid: 73b576f4391907148b37cb39405cedac, type: 3}
+  bulletPrefab: {fileID: 9130307031880921217, guid: 041cafc5d5f2809439010a4bdd981f3e, type: 3}
   bulletSpawnPoint: {fileID: 5314177}
   targetPlayerRotation: {x: 0, y: 0}
   controllerConnected: 0
