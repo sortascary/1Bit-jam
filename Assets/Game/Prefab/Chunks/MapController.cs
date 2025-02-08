@@ -18,6 +18,11 @@ public class MapController : MonoBehaviour
     private float optimizerCooldown;
     public float optimizerCooldownDur;
 
+    [Header("Enemy Spawning")]
+    public List<GameObject> enemyPrefabs; // List of enemy types
+    public float enemySpawnInterval = 60f; // Time in seconds
+    private float enemySpawnTimer;
+
     void Start()
     {
         if (player.TryGetComponent(out PlayerBehavior pb))
@@ -28,6 +33,8 @@ public class MapController : MonoBehaviour
         {
             Debug.LogError("PlayerBehavior component is missing on the player!");
         }
+
+        enemySpawnTimer = enemySpawnInterval; // Initialize the timer
     }
 
     void FixedUpdate()
@@ -38,6 +45,7 @@ public class MapController : MonoBehaviour
         }
         ChunkChecker();
         ChunkOptimizer();
+        EnemySpawner(); // Call enemy spawner every frame
     }
 
     void ChunkChecker()
@@ -105,5 +113,45 @@ public class MapController : MonoBehaviour
         {
             spawnedChunks.Remove(chunk);
         }
+    }
+
+    void EnemySpawner()
+    {
+        enemySpawnTimer -= Time.deltaTime;
+
+        if (enemySpawnTimer <= 0)
+        {
+            enemySpawnTimer = enemySpawnInterval; // Reset timer
+
+            if (spawnedChunks.Count > 0)
+            {
+                GameObject randomChunk = GetRandomChunk();
+                if (randomChunk != null)
+                {
+                    SpawnEnemy(randomChunk);
+                }
+            }
+        }
+    }
+
+    GameObject GetRandomChunk()
+    {
+        if (spawnedChunks.Count == 0) return null;
+
+        int randIndex = Random.Range(0, spawnedChunks.Count);
+        int i = 0;
+        foreach (GameObject chunk in spawnedChunks)
+        {
+            if (i == randIndex) return chunk;
+            i++;
+        }
+        return null;
+    }
+
+    void SpawnEnemy(GameObject chunk)
+    {
+        int rand = Random.Range(0, enemyPrefabs.Count);
+        Vector3 spawnPos = chunk.transform.position + new Vector3(Random.Range(-2, 2), Random.Range(-2, 2), 0); // Random offset within chunk
+        Instantiate(enemyPrefabs[rand], spawnPos, Quaternion.identity);
     }
 }

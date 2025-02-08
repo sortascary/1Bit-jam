@@ -9,6 +9,7 @@ public class AnimalBehavior : MonoBehaviour
     public float disappearTime = 30f;
     public float delayTime = 2f;
     public bool isDead = false;
+    public float Healammount;
 
     public bool isPlayerNearby = false;
     private float timer = 0f;
@@ -45,6 +46,7 @@ public class AnimalBehavior : MonoBehaviour
     public void IsDie()
     {
         isDead = true;
+        StatusAdapter.Instance.RestoreHealth(Healammount);
         //gambar animasi mati
     }
 

@@ -45,7 +45,6 @@ public class StaticStatus : MonoBehaviour
 
     [Header("Bleed Settings")]
     [SerializeField] private float _BleedAmount = 0.03f;
-    [SerializeField] private float _HealAmount = 2f;
 
     [Header("Bullet Settings")]
     [SerializeField] private float _bulletSpeedMultiplier = 1f;
@@ -141,11 +140,6 @@ public class StaticStatus : MonoBehaviour
         set => Instance._BleedAmount = value;
     }
 
-    public static float HealAmount
-    {
-        get => Instance._HealAmount;
-        set => Instance._HealAmount = value;
-    }
 
     public static float BulletSpeedMultiplier
     {

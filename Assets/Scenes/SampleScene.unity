@@ -157,7 +157,7 @@ MonoBehaviour:
   _currentHealth: 100
   _maxEnergy: 100
   _currentEnergy: 100
-  _ScoreTime: {fileID: 0}
+  _ScoreTime: {fileID: 605780620}
   _accelerationForce: 5
   _maxSpeed: 5
   _maxSpeedDash: 45
@@ -167,11 +167,10 @@ MonoBehaviour:
   _dashCooldown: 0.4
   _dashDuration: 0.5
   _BleedAmount: 0.03
-  _HealAmount: 10
   _bulletSpeedMultiplier: 1
   _bulletCooldownMultiplier: 1
   _endScreen: {fileID: 448468275}
-  _ScoreTi: {fileID: 605780620}
+  _ScoreTi: {fileID: 1900045148}
 --- !u!114 &5314175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2100,6 +2099,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1900045148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2340522254550862982, guid: 334cf28248f219d4897021a1bd01e1e6, type: 3}
+  m_PrefabInstance: {fileID: 1429439169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1941569078
 GameObject:
   m_ObjectHideFlags: 0

@@ -238,7 +238,6 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         if (interactAction.WasPressedThisFrame())
         {
             Debug.Log("Healing");
-            StatusAdapter.Instance.RestoreHealth(StaticStatus.HealAmount);
         }
     }
 
