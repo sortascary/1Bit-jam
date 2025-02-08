@@ -44,14 +44,8 @@ TagManager:
   - name: Background
     uniqueID: 2612972463
     locked: 0
-  - name: NPC
-    uniqueID: 3837480227
-    locked: 0
   - name: Player
     uniqueID: 4051712623
-    locked: 0
-  - name: Bullet
-    uniqueID: 1148991521
     locked: 0
   - name: Foreground
     uniqueID: 2086630031
