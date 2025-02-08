@@ -18,6 +18,7 @@ public class LaserBullet : BulletBehavior
     [SerializeField] private float secondsToDamage;
     [SerializeField] private GameObject hitEffect;
     [SerializeField] private AudioClip hitSound;
+    [SerializeField] Color colorAfterShoot;
 
     private AudioSource src;
     private bool firstTime = false;
@@ -58,7 +59,7 @@ public class LaserBullet : BulletBehavior
             float t = Mathf.Clamp01((Time.time - hasShotStartTime) / (timeToDestroy - timeToShoot));
             float alpha = Mathf.Lerp(1f, 0f, t);
 
-            Color fadedColor = new Color(1f, 1f, 1f, alpha);
+            Color fadedColor = new Color(colorAfterShoot.r, colorAfterShoot.g, colorAfterShoot.b, alpha);
             lineRenderer.startColor = fadedColor;
             lineRenderer.endColor = fadedColor;
 
