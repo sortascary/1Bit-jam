@@ -110,10 +110,13 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
     private void FixedUpdate()
     {
-
-        HandleMovement();
-
-        if (StaticStatus.CurrentHealth > 0) StatusAdapter.Instance.TakeDamage(StaticStatus.BleedAmount); else if (StaticStatus.EndScreen != null) StaticStatus.EndScreen.gameObject.SetActive(true);
+        if (StaticStatus.CurrentHealth > 0) {
+            StatusAdapter.Instance.TakeDamage(StaticStatus.BleedAmount);
+            HandleMovement();
+        }
+        else if (StaticStatus.EndScreen != null) {
+            StaticStatus.EndScreen.gameObject.SetActive(true);
+        }
         if (currentShootCooldown > 0f) currentShootCooldown -= Time.deltaTime;
         if (currentDashCooldown > 0f) currentDashCooldown -= Time.deltaTime;
     }
@@ -148,7 +151,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (currentShootCooldown <= 0f && StaticStatus.CurrentEnergy > bulletPrefab.GetComponent<BulletBehavior>().EnergyCost())
+        if (currentShootCooldown <= 0f && StaticStatus.CurrentHealth > bulletPrefab.GetComponent<BulletBehavior>().EnergyCost())
         {
             SpawnBullet();
         }
