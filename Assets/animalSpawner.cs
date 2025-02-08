@@ -22,7 +22,7 @@ public class animalSpawner : MonoBehaviour
     {
         float chance = Random.Range(0f, 1f); // Menghasilkan angka antara 0.0 dan 1.0
 
-        if (chance <= 0.3f) // 30% kemungkinan untuk spawn hewan
+        if (chance <= 0.4f) // 30% kemungkinan untuk spawn hewan
         {
             isAnimalInThere = true;
         }
