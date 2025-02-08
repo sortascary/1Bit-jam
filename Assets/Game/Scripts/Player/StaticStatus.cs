@@ -30,6 +30,9 @@ public class StaticStatus : MonoBehaviour
     [SerializeField] private float _maxEnergy = 100f;
     [SerializeField] private float _currentEnergy = 100f;
 
+    [Header("Timer")]
+    [SerializeField] private TextMeshProUGUI _ScoreTime;
+
     [Header("Movement Settings")]
     [SerializeField] private float _accelerationForce = 10f;
     [SerializeField] private float _maxSpeed = 15f;
@@ -76,6 +79,12 @@ public class StaticStatus : MonoBehaviour
     {
         get => Instance._currentEnergy;
         set => Instance._currentEnergy = value;
+    }
+
+    public static TextMeshProUGUI ScoreTime
+    {
+        get => Instance._ScoreTime;
+        set => Instance._ScoreTime = value;
     }
 
     public static float AccelerationForce
