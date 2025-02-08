@@ -223,6 +223,7 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 5314177}
   targetPlayerRotation: {x: 0, y: 0}
   controllerConnected: 0
+  currentDashCooldown: 0
 --- !u!212 &5314176
 SpriteRenderer:
   m_ObjectHideFlags: 0
