@@ -5,6 +5,7 @@ public class MissileBullet : BulletBehavior
     [Header("Bullet Settings")]
     [SerializeField] private float bulletSpeed = 15f;
     [SerializeField] private float bulletDamage = 1;
+    [SerializeField] private float knockbackMultiplier;
     [SerializeField] private float bulletCost = 1;
     [SerializeField] private float cooldown = 0.1f;
     [SerializeField] private float timeToDestroy = 3;
@@ -97,12 +98,13 @@ public class MissileBullet : BulletBehavior
                 Destroy(Instantiate(hitEffect, transform.position, transform.rotation), 0.5f);
 
             IsDamage isDamage = collision.gameObject.GetComponent<IsDamage>();
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
             if (isDamage != null)
             {
                 isDamage.Damage(bulletDamage);
             }
 
-            Destroy(transform.GetChild(0).gameObject);
+            Destroy(gameObject);
         }
 
         firstHit = true;

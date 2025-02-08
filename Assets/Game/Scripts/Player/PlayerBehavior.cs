@@ -15,7 +15,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     [HideInInspector] public InputAction dashAction;
 
     [Header("Bullet Settings")]
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] public GameObject bulletPrefab;
     [SerializeField] private Transform bulletSpawnPoint;
 
     [Header("Internal State")]
@@ -25,9 +25,10 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private Rigidbody2D rb;
     private Animator animator;
     [HideInInspector] public bool controllerConnected = false;
+    private float _scoreTimer = 0f;
     private float scoreTi;
     private float currentShootCooldown = 0f;
-    private float currentDashCooldown = 0f;
+    [HideInInspector] public float currentDashCooldown = 0f;
 
     public Vector2 MoveDirection { get => moveDirection; set => moveDirection = value; }
 
@@ -86,13 +87,28 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private void Update()
     {
         if (StaticStatus.CurrentHealth > 0)
-            scoreTi += Time.deltaTime;
-        int _Minutes = Mathf.FloorToInt(scoreTi / 60);
-        int _Seconds = Mathf.FloorToInt(scoreTi % 60);
-        if (StaticStatus.EndScreen != null)
-            StaticStatus.ScoreTi.text = $"{_Minutes:00} : {_Seconds:00}";
+        {
+            _scoreTimer += Time.deltaTime; // Tambahkan waktu hanya jika masih hidup
+        }
+        else
+        {
+            if (StaticStatus.ScoreTi != null)
+            {
+                StaticStatus.ScoreTi.text = Mathf.FloorToInt(_scoreTimer).ToString();
+            }
+        }
+
+        if (StaticStatus.ScoreTime != null)
+        {
+            // Tampilkan waktu yang berjalan di gameplay
+            int _GameMinutes = Mathf.FloorToInt(_scoreTimer / 60);
+            int _GameSeconds = Mathf.FloorToInt(_scoreTimer % 60);
+            StaticStatus.ScoreTime.text = $"{_GameMinutes:00} : {_GameSeconds:00}";
+        }
+
         HandleInteract();
     }
+
     private void FixedUpdate()
     {
 
@@ -129,7 +145,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         mouseAction = gameplayInputMap?.FindAction("Mouse");
         lookAction = gameplayInputMap?.FindAction("Look");
         attackAction = gameplayInputMap?.FindAction("Attack");
-        dashAction = gameplayInputMap?.FindAction("Dash");
+        dashAction = gameplayInputMap?.FindAction("Jump");
     }
 
     private void OnAttack(InputAction.CallbackContext context)
@@ -142,6 +158,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
     private void OnDash(InputAction.CallbackContext context)
     {
+        Debug.Log("dash pressed");
         if (currentDashCooldown <= 0f)
         {
             StartCoroutine(DashCoroutine());
@@ -150,6 +167,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
     private IEnumerator DashCoroutine()
     {
+        Debug.Log("dashPlayed");
         currentDashCooldown = StaticStatus.DashCooldown;
         float dashTime = StaticStatus.DashDuration;
         currentMaxSpeed = StaticStatus.MaxSpeedDash;
