@@ -1189,7 +1189,7 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
-  teleportRadius: 20
+  teleportRadius: 10
   maxTeleportAttempts: 2147483647
   subtleMovementIntensity: 1
   subtleMovementFrequency: 5
