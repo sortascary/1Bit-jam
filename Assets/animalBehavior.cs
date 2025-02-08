@@ -12,11 +12,13 @@ public class AnimalBehavior : MonoBehaviour
     public float Healammount;
 
     public bool isPlayerNearby = false;
+    private Animator animator;
     private float timer = 0f;
     private Vector2 wanderTarget;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         SetRandomWanderTarget();
     }
 
@@ -47,7 +49,7 @@ public class AnimalBehavior : MonoBehaviour
     {
         isDead = true;
         StatusAdapter.Instance.RestoreHealth(Healammount);
-        //gambar animasi mati
+        animator.SetTrigger("Die");
     }
 
     void FleeFromPlayer()
@@ -57,6 +59,11 @@ public class AnimalBehavior : MonoBehaviour
         {
             Vector2 fleeDirection = (transform.position - player.transform.position).normalized;
             transform.position += (Vector3)fleeDirection * fleeSpeed * Time.deltaTime;
+
+            if (fleeDirection.x > 0)
+                transform.localScale = new Vector3(1, 1, 1);  // Facing right
+            else if (fleeDirection.x < 0)
+                transform.localScale = new Vector3(-1, 1, 1); // Facing left
         }
     }
 

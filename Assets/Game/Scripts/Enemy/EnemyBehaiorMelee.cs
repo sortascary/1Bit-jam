@@ -22,6 +22,7 @@ public class EnemyBehaviorMelee : MonoBehaviour, IsDamage
     [SerializeField] private float attackCooldown = 1.5f;
 
     private Transform player;
+    private Animator animator;
     private Rigidbody2D rb;
     private float currentHealth;
     private float attackTimer = 0f;
@@ -32,6 +33,7 @@ public class EnemyBehaviorMelee : MonoBehaviour, IsDamage
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         mainCamera = Camera.main;
         if (attackObject != null) attackObject.SetActive(false); // Deactivate attack initially
     }
@@ -96,6 +98,7 @@ public class EnemyBehaviorMelee : MonoBehaviour, IsDamage
 
     private void Attack()
     {
+        animator.SetTrigger("Attack");
         isAttacking = true;
         attackTimer = attackCooldown;
 
