@@ -101,9 +101,9 @@ public class LaserBullet : BulletBehavior
         if (hit)
         {
             IsDamage isDamage = hit.collider.GetComponent<IsDamage>();
-            hit.collider.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
             if (isDamage != null)
             {
+                hit.collider.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
                 isDamage.Damage(bulletDamage);
             }
         }
