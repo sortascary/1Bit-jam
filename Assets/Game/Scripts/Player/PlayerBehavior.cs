@@ -24,6 +24,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     [HideInInspector] public Vector2 targetPlayerRotation;
     private Rigidbody2D rb;
     [HideInInspector] public bool controllerConnected = false;
+    private float _scoreTimer = 0f;
     private float scoreTi;
     private float currentShootCooldown = 0f;
     [HideInInspector] public float currentDashCooldown = 0f;
@@ -85,13 +86,28 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     private void Update()
     {
         if (StaticStatus.CurrentHealth > 0)
-            scoreTi += Time.deltaTime;
-        int _Minutes = Mathf.FloorToInt(scoreTi / 60);
-        int _Seconds = Mathf.FloorToInt(scoreTi % 60);
-        if (StaticStatus.EndScreen != null)
-            StaticStatus.ScoreTi.text = $"{_Minutes:00} : {_Seconds:00}";
+        {
+            _scoreTimer += Time.deltaTime; // Tambahkan waktu hanya jika masih hidup
+        }
+        else
+        {
+            if (StaticStatus.ScoreTi != null)
+            {
+                StaticStatus.ScoreTi.text = Mathf.FloorToInt(_scoreTimer).ToString();
+            }
+        }
+
+        if (StaticStatus.ScoreTime != null)
+        {
+            // Tampilkan waktu yang berjalan di gameplay
+            int _GameMinutes = Mathf.FloorToInt(_scoreTimer / 60);
+            int _GameSeconds = Mathf.FloorToInt(_scoreTimer % 60);
+            StaticStatus.ScoreTime.text = $"{_GameMinutes:00} : {_GameSeconds:00}";
+        }
+
         HandleInteract();
     }
+
     private void FixedUpdate()
     {
 
