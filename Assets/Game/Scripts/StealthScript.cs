@@ -10,6 +10,9 @@ public class StealthScript : MonoBehaviour
     public bool isPlayerNearby;
     public UnityEvent onStealth;
     public bool alreadyStealthed = false;
+    public float Healammount= 15;
+    private PlayerBehavior playerB;
+
 
     private void Start()
     {
@@ -36,9 +39,9 @@ public class StealthScript : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerNearby && interactAction.action.WasPressedThisFrame())
+        if (isPlayerNearby && interactAction.action.WasPressedThisFrame()&&!alreadyStealthed)
         {
-            Interact(); 
+            Interact();
         }
     }
 
@@ -53,7 +56,9 @@ public class StealthScript : MonoBehaviour
                 player.transform.position = teleportDestination.position;
                 onStealth.Invoke();
                 alreadyStealthed = true; 
-                interactImage.SetActive(false); 
+                interactImage.SetActive(false);
+                StatusAdapter.Instance.RestoreHealth(Healammount);
+                playerB.addScore();
             }
         }
     }

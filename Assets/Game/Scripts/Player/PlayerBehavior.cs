@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerBehavior : MonoBehaviour, IsDamage
 {
@@ -35,6 +36,11 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
     public float shieldCooldownDuration = 5f;
     public GameObject shield;
 
+    [Header("Score")]
+    public float score = 0;
+    public TextMeshProUGUI scoreText;
+    public float totalScore = 0;
+    public TextMeshProUGUI totalScoreText;
     public Vector2 MoveDirection { get => moveDirection; set => moveDirection = value; }
 
     private void Awake()
@@ -118,7 +124,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
             if (currentShieldCooldown <= 0f)
             {
-                shield.SetActive(false);
+                shield.SetActive(false);    
             }
         }
 
@@ -134,11 +140,23 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
         else if (StaticStatus.EndScreen != null)
         {
             StaticStatus.EndScreen.gameObject.SetActive(true);
+            TotalScore();
         }
         if (currentShootCooldown > 0f) currentShootCooldown -= Time.deltaTime;
         if (currentDashCooldown > 0f) currentDashCooldown -= Time.deltaTime;
     }
 
+    public void addScore()
+    {
+        score++;
+        scoreText.text = "" + score;
+    }
+
+    public void TotalScore()
+    {
+        totalScore = score * scoreTi;
+        totalScoreText.text = ""+totalScore;
+    }
 
     public void ActivateShield()
     {
