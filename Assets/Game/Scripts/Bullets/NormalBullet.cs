@@ -17,7 +17,7 @@ public class NormalBullet : BulletBehavior
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy")||collision.CompareTag("Player"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
         {
             if (!firstHit)
             {
@@ -40,12 +40,13 @@ public class NormalBullet : BulletBehavior
                 Destroy(gameObject);
             }
 
+
+
+
+            firstHit = true;
+
+            if (!src.isPlaying) Destroy(gameObject);
         }
-        
-
-        firstHit = true;
-
-        if (!src.isPlaying) Destroy(gameObject);
     }
 
     public override void Attack(float bulletSpeedMultiplier, GameObject player)
