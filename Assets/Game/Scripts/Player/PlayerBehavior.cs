@@ -106,15 +106,19 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
             StaticStatus.ScoreTime.text = $"{_GameMinutes:00} : {_GameSeconds:00}";
         }
 
-        HandleInteract();
     }
 
     private void FixedUpdate()
     {
-
-        HandleMovement();
-
-        if (StaticStatus.CurrentHealth > 0) StatusAdapter.Instance.TakeDamage(StaticStatus.BleedAmount); else if (StaticStatus.EndScreen != null) StaticStatus.EndScreen.gameObject.SetActive(true);
+        if (StaticStatus.CurrentHealth > 0)
+        {
+            HandleMovement();
+            StatusAdapter.Instance.TakeDamage(StaticStatus.BleedAmount);
+        }
+        else if (StaticStatus.EndScreen != null)
+        {
+            StaticStatus.EndScreen.gameObject.SetActive(true);
+        }
         if (currentShootCooldown > 0f) currentShootCooldown -= Time.deltaTime;
         if (currentDashCooldown > 0f) currentDashCooldown -= Time.deltaTime;
     }
@@ -150,7 +154,7 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (currentShootCooldown <= 0f && StaticStatus.CurrentEnergy > bulletPrefab.GetComponent<BulletBehavior>().EnergyCost())
+        if (currentShootCooldown <= 0f && StaticStatus.CurrentHealth > bulletPrefab.GetComponent<BulletBehavior>().EnergyCost())
         {
             SpawnBullet();
         }
@@ -230,14 +234,6 @@ public class PlayerBehavior : MonoBehaviour, IsDamage
             }
 
             yield return new WaitForSeconds(1f);
-        }
-    }
-
-    public void HandleInteract()
-    {
-        if (interactAction.WasPressedThisFrame())
-        {
-            Debug.Log("Healing");
         }
     }
 

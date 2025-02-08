@@ -88,6 +88,10 @@ public class EnemyBehaviorMelee : MonoBehaviour, IsDamage
 
         Vector2 direction = (player.position - transform.position).normalized;
         rb.linearVelocity = direction * speed;
+        if (direction.x > 0)
+            transform.localScale = new Vector3(1, 1, 1);  // Facing right
+        else if (direction.x < 0)
+            transform.localScale = new Vector3(-1, 1, 1); // Facing left
     }
 
     private void Attack()

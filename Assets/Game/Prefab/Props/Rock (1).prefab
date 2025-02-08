@@ -167,6 +167,7 @@ MonoBehaviour:
   isAnimalInThere: 0
   animalPrefabs:
   - {fileID: 4811863297052603040, guid: e678807bf11ae574d818a9f6815fe09f, type: 3}
+  - {fileID: 4811863297052603040, guid: 30087655129194947a805071b453f7cf, type: 3}
 --- !u!114 &4198224928776614289
 MonoBehaviour:
   m_ObjectHideFlags: 0

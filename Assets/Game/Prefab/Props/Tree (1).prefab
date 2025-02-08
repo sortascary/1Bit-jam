@@ -277,7 +277,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2086630031
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -7203440370553482089, guid: ca1028ceea0f7ea4d85bfdffed9c7ff8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -351,6 +351,7 @@ MonoBehaviour:
   isAnimalInThere: 0
   animalPrefabs:
   - {fileID: 4811863297052603040, guid: e678807bf11ae574d818a9f6815fe09f, type: 3}
+  - {fileID: 4811863297052603040, guid: 30087655129194947a805071b453f7cf, type: 3}
 --- !u!114 &5013331043839378999
 MonoBehaviour:
   m_ObjectHideFlags: 0

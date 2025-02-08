@@ -35,6 +35,7 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     [SerializeField] private float[] lootChances = { 30f, 60f, 10f };
 
     private Transform player;
+    private Animator animator;
     private Rigidbody2D rb;
     private float currentHealth;
     private Vector2 subtleMovementOffset;
@@ -46,6 +47,7 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         mainCamera = Camera.main;
     }
 
@@ -58,11 +60,15 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-            // Teleport if too far
+            // Flip sprite based on movement direction
+            if (rb.linearVelocity.x > 0)
+                transform.localScale = new Vector3(1, 1, 1);
+            else if (rb.linearVelocity.x < 0)
+                transform.localScale = new Vector3(-1, 1, 1);
+
             if (distanceToPlayer > teleportThreshold)
             {
                 TryTeleport();
-                Debug.Log("Test");
             }
             else
             {
@@ -153,6 +159,7 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
             return;
         }
 
+        animator.SetTrigger("throw");
         // Calculate the direction towards the player
         Vector2 directionToPlayer = (player.position - bulletSpawnPoint.position).normalized;
 

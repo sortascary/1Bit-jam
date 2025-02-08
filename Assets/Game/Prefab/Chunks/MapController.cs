@@ -123,35 +123,61 @@ public class MapController : MonoBehaviour
         {
             enemySpawnTimer = enemySpawnInterval; // Reset timer
 
-            if (spawnedChunks.Count > 0)
+            Vector3 spawnPos = GetSpawnPositionOutsideView();
+            if (spawnPos != Vector3.zero)
             {
-                GameObject randomChunk = GetRandomChunk();
-                if (randomChunk != null)
-                {
-                    SpawnEnemy(randomChunk);
-                }
+                SpawnEnemy(spawnPos);
             }
         }
     }
 
-    GameObject GetRandomChunk()
+    Vector3 GetSpawnPositionOutsideView()
     {
-        if (spawnedChunks.Count == 0) return null;
+        Camera cam = Camera.main;
+        if (cam == null) return Vector3.zero;
 
-        int randIndex = Random.Range(0, spawnedChunks.Count);
-        int i = 0;
-        foreach (GameObject chunk in spawnedChunks)
+        // Get camera bounds in world space
+        float camHeight = 2f * cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
+
+        // Define spawn margins (off-screen distance)
+        float spawnMargin = 2f; // Adjust as needed
+
+        // Randomize spawn position outside the view
+        int side = Random.Range(0, 4); // 0 = Left, 1 = Right, 2 = Top, 3 = Bottom
+        Vector3 spawnPos = Vector3.zero;
+
+        switch (side)
         {
-            if (i == randIndex) return chunk;
-            i++;
+            case 0: // Left
+                spawnPos = new Vector3(player.transform.position.x - (camWidth / 2) - spawnMargin,
+                                       player.transform.position.y + Random.Range(-camHeight / 2, camHeight / 2),
+                                       0);
+                break;
+            case 1: // Right
+                spawnPos = new Vector3(player.transform.position.x + (camWidth / 2) + spawnMargin,
+                                       player.transform.position.y + Random.Range(-camHeight / 2, camHeight / 2),
+                                       0);
+                break;
+            case 2: // Top
+                spawnPos = new Vector3(player.transform.position.x + Random.Range(-camWidth / 2, camWidth / 2),
+                                       player.transform.position.y + (camHeight / 2) + spawnMargin,
+                                       0);
+                break;
+            case 3: // Bottom
+                spawnPos = new Vector3(player.transform.position.x + Random.Range(-camWidth / 2, camWidth / 2),
+                                       player.transform.position.y - (camHeight / 2) - spawnMargin,
+                                       0);
+                break;
         }
-        return null;
+
+        return spawnPos;
     }
 
-    void SpawnEnemy(GameObject chunk)
+    void SpawnEnemy(Vector3 spawnPos)
     {
         int rand = Random.Range(0, enemyPrefabs.Count);
-        Vector3 spawnPos = chunk.transform.position + new Vector3(Random.Range(-2, 2), Random.Range(-2, 2), 0); // Random offset within chunk
         Instantiate(enemyPrefabs[rand], spawnPos, Quaternion.identity);
     }
+
 }
