@@ -46,7 +46,6 @@ public class StatusAdapter : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        Debug.Log(StaticStatus.CurrentHealth);
         float fillF = frontHealthBar.fillAmount;
         float fillB = backHealthBar.fillAmount;
         float hFraction = StaticStatus.CurrentHealth / StaticStatus.MaxHealth;

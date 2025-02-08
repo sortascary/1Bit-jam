@@ -9,8 +9,13 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     [Header("Detection Settings")]
     [SerializeField] private float detectionRadius = 15f;
     [SerializeField] private float safeDistance = 7f;
+    [SerializeField] private float teleportThreshold = 25f; // Max distance before teleporting
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask obstacleLayer;
+
+    [Header("Teleportation Settings")]
+    [SerializeField] private float teleportRadius = 12f; // Distance for teleportation
+    [SerializeField] private int maxTeleportAttempts = 10;
 
     [Header("Movement Settings")]
     [SerializeField] private float subtleMovementIntensity = 1f;
@@ -35,28 +40,40 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     private Vector2 subtleMovementOffset;
     private float subtleMovementTimer;
     private float currentCooldown = 0f;
+    private Camera mainCamera;
 
     void Start()
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
+        mainCamera = Camera.main;
     }
 
     void Update()
     {
-        Debug.Log(currentHealth);
 
         DetectPlayer();
 
         if (player != null)
         {
-            MaintainSafeDistance();
-            ApplySubtleMovement();
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-            if (currentCooldown <= 0f && CanShootPlayer())
+            // Teleport if too far
+            if (distanceToPlayer > teleportThreshold)
             {
-                ShootAtPlayer();
-                currentCooldown = shootingCooldown;
+                TryTeleport();
+                Debug.Log("Test");
+            }
+            else
+            {
+                MaintainSafeDistance();
+                ApplySubtleMovement();
+
+                if (currentCooldown <= 0f && CanShootPlayer())
+                {
+                    ShootAtPlayer();
+                    currentCooldown = shootingCooldown;
+                }
             }
         }
         else
@@ -73,15 +90,7 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     private void DetectPlayer()
     {
         Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
-
-        if (playerCollider != null)
-        {
-            player = playerCollider.transform;
-        }
-        else
-        {
-            player = null;
-        }
+        player = playerCollider != null ? playerCollider.transform : null;
     }
 
     private void MaintainSafeDistance()
@@ -135,12 +144,7 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
         if (angleToPlayer > shootingAngleThreshold) return false;
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, obstacleLayer);
-        if (hit.collider == null || hit.collider.transform == player)
-        {
-            return true;
-        }
-
-        return false;
+        return hit.collider == null || hit.collider.transform == player;
     }
 
     private void ShootAtPlayer()
@@ -152,15 +156,47 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
         }
 
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-
         BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
         if (bulletBehavior != null)
         {
             bulletBehavior.Attack(upgradeBulletSpeed, gameObject);
         }
-
         Destroy(bullet, 3f);
     }
+
+    private void TryTeleport()
+    {
+        Debug.Log("Attempting to teleport...");
+
+        for (int i = 0; i < maxTeleportAttempts; i++)
+        {
+            // Generate a random offset around the player
+            Vector2 randomOffset = Random.insideUnitCircle.normalized * teleportRadius;
+            Vector2 teleportPosition = (Vector2)player.position + randomOffset;
+
+            // Check if the position is off-screen and not inside an obstacle
+            if (!IsPositionVisible(teleportPosition) && !Physics2D.OverlapCircle(teleportPosition, 1f, obstacleLayer))
+            {
+                transform.position = teleportPosition;
+                Debug.Log("Teleported to: " + teleportPosition);
+                return;
+            }
+        }
+
+        Debug.LogWarning("No valid teleport location found after " + maxTeleportAttempts + " attempts.");
+    }
+
+    private bool IsPositionVisible(Vector2 position)
+    {
+        Vector3 viewportPoint = mainCamera.WorldToViewportPoint(position);
+
+        bool isVisible = viewportPoint.x > 0 && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 1;
+
+        Debug.Log("Checking visibility at " + position + " -> Visible: " + isVisible);
+
+        return isVisible;
+    }
+
 
     public void Damage(float damageAmount)
     {
