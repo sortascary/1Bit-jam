@@ -11,6 +11,7 @@ public class LaserBullet : BulletBehavior
     [SerializeField] private float length = 30f;
     [SerializeField] private float timeToShoot = 0.4f;
     [SerializeField] private float bulletDamage = 1;
+    [SerializeField] private float knockbackMultiplier = 100;
     [SerializeField] private float bulletCost = 1;
     [SerializeField] private float cooldown = 0.1f;
     [SerializeField] private float timeToDestroy = 3;
@@ -97,10 +98,10 @@ public class LaserBullet : BulletBehavior
         yield return new WaitForSeconds(secondsToDamage);
 
         RaycastHit2D hit = Physics2D.Raycast(lastShotPosition, transform.up, lineLength);
-
         if (hit)
         {
             IsDamage isDamage = hit.collider.GetComponent<IsDamage>();
+            hit.collider.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
             if (isDamage != null)
             {
                 isDamage.Damage(bulletDamage);
