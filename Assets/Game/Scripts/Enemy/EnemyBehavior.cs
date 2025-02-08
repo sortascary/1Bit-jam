@@ -111,13 +111,6 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
         {
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.deltaTime);
         }
-
-        Vector2 lookDirection = (Vector2)player.position - (Vector2)transform.position;
-        if (lookDirection != Vector2.zero)
-        {
-            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, angle), turningSpeed * Time.deltaTime);
-        }
     }
 
     private void ApplySubtleMovement()
@@ -139,30 +132,48 @@ public class EnemyBehavior : MonoBehaviour, IsDamage
     {
         if (player == null) return false;
 
-        Vector2 directionToPlayer = ((Vector2)player.position - (Vector2)transform.position).normalized;
-        float angleToPlayer = Vector2.Angle(transform.up, directionToPlayer);
-        if (angleToPlayer > shootingAngleThreshold) return false;
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, detectionRadius, obstacleLayer);
+        // Check if player is within shooting radius
+        if (distanceToPlayer > detectionRadius) return false;
+
+        // Check if there are obstacles blocking the shot
+        Vector2 directionToPlayer = (player.position - transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, distanceToPlayer, obstacleLayer);
+
         return hit.collider == null || hit.collider.transform == player;
     }
 
+
     private void ShootAtPlayer()
     {
-        if (bulletPrefab == null || bulletSpawnPoint == null)
+        if (bulletPrefab == null || bulletSpawnPoint == null || player == null)
         {
-            Debug.LogWarning("Bullet prefab or spawn point is not set!");
+            Debug.LogWarning("Bullet prefab, spawn point, or player is not set!");
             return;
         }
 
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
-        if (bulletBehavior != null)
+        // Calculate the direction towards the player
+        Vector2 directionToPlayer = (player.position - bulletSpawnPoint.position).normalized;
+
+        // Instantiate the bullet
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+
+        // Rotate the bullet to face the player
+        float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+        // Apply force/movement to the bullet
+        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+        if (bulletRb != null)
         {
-            bulletBehavior.Attack(upgradeBulletSpeed, gameObject);
+            bulletRb.linearVelocity = directionToPlayer * upgradeBulletSpeed;
         }
+
         Destroy(bullet, 3f);
     }
+
+
 
     private void TryTeleport()
     {
