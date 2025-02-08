@@ -85,6 +85,7 @@ public class MissileBullet : BulletBehavior
         target = closestEnemy;
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
@@ -108,10 +109,11 @@ public class MissileBullet : BulletBehavior
 
                 Destroy(gameObject);
             }
-        }
 
-        firstHit = true;
-        if (!src.isPlaying) Destroy(gameObject);
+
+            firstHit = true;
+            if (!src.isPlaying) Destroy(gameObject);
+        }
     }
 
     public override void Attack(float bulletSpeedMultiplier, GameObject player)

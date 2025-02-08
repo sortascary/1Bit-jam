@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 5314181}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -981,7 +981,7 @@ GameObject:
   - component: {fileID: 523137862}
   m_Layer: 8
   m_Name: Melee
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2370,6 +2370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TerrainChunk
       objectReference: {fileID: 0}
+    - target: {fileID: 3216756212428835996, guid: 4957d917ee3b95d43a93901d50f5dd12, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6180703906301510390, guid: 4957d917ee3b95d43a93901d50f5dd12, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2433,7 +2437,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5315415410222614011, guid: 16d4370f2b53fb248a81035fc4faf537, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5315415410222614011, guid: 16d4370f2b53fb248a81035fc4faf537, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837869480130257706, guid: 16d4370f2b53fb248a81035fc4faf537, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837869480130257706, guid: 16d4370f2b53fb248a81035fc4faf537, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1638299231
       objectReference: {fileID: 0}
     - target: {fileID: 8718976604001862630, guid: 16d4370f2b53fb248a81035fc4faf537, type: 3}
       propertyPath: m_LocalPosition.x
