@@ -17,26 +17,31 @@ public class NormalBullet : BulletBehavior
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!firstHit)
+        if (collision.CompareTag("Enemy")||collision.CompareTag("Player"))
         {
-            src = GetComponent<AudioSource>();
-
-            src.clip = hitSound;
-            src.pitch = Random.Range(1.5f, 2.2f);
-
-            src.Play();
-
-            if (hitEffect != null) Destroy(Instantiate(hitEffect, transform.position, transform.rotation), 0.5f);
-
-            IsDamage isDamage = collision.gameObject.GetComponent<IsDamage>();
-            if (isDamage != null)
+            if (!firstHit)
             {
-                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
-                isDamage.Damage(bulletDamage);
+                src = GetComponent<AudioSource>();
+
+                src.clip = hitSound;
+                src.pitch = Random.Range(1.5f, 2.2f);
+
+                src.Play();
+
+                if (hitEffect != null) Destroy(Instantiate(hitEffect, transform.position, transform.rotation), 0.5f);
+
+                IsDamage isDamage = collision.gameObject.GetComponent<IsDamage>();
+                if (isDamage != null)
+                {
+                    collision.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * knockbackMultiplier);
+                    isDamage.Damage(bulletDamage);
+                }
+
+                Destroy(gameObject);
             }
 
-            Destroy(gameObject);
         }
+        
 
         firstHit = true;
 
